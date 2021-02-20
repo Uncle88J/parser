@@ -7,7 +7,7 @@
     <groupId>ir.markazandroid.parsers</groupId>
     <artifactId>parser</artifactId>
     <packaging>pom</packaging>
-    <version>${parser.version}</version>
+    <version>1.8.4</version>
 
     <properties>
         <parser.version>1.8.4</parser.version>
