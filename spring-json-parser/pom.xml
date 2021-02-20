@@ -6,7 +6,7 @@
     <parent>
         <artifactId>parser</artifactId>
         <groupId>ir.markazandroid.parsers</groupId>
-        <version>${parser.version}</version>
+        <version>1.8.4</version>
     </parent>
 
     <packaging>jar</packaging>
