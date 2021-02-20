@@ -6,7 +6,7 @@
     <parent>
         <artifactId>parser</artifactId>
         <groupId>ir.markazandroid.parsers</groupId>
-        <version>1.8.3</version>
+        <version>${parser.version}</version>
     </parent>
 
     <packaging>jar</packaging>
@@ -20,7 +20,7 @@
         <dependency>
             <groupId>ir.markazandroid.parsers</groupId>
             <artifactId>json-parser</artifactId>
-            <version>1.8.2</version>
+            <version>${parser.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
