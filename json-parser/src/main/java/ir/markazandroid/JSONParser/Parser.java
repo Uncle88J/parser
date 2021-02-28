@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Coded by Ali on 30/06/2017.
- * latest update 22/06/2019.
- * version 1.8.2
+ * latest update 28/02/2021.
+ * version 1.9.0
  */
 
 @SuppressWarnings("unchecked")
@@ -152,7 +152,9 @@ public class Parser {
     private Object invokeGetter(Object source, Methods methods, JsonProfile profile) throws InvocationTargetException, IllegalAccessException, IOException {
         String valueType = methods.annotation.classType();
         Method method = methods.getter;
-        if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_SHORT)) {
+        if (method.getReturnType().isEnum()) {
+            return ((Enum) method.invoke(source)).name();
+        } else if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_SHORT)) {
             try {
                 return ((Short) method.invoke(source)).intValue();
 
@@ -272,7 +274,9 @@ public class Parser {
             InvocationTargetException, IllegalAccessException, IOException, ClassNotFoundException {
         String valueType = methods.annotation.classType();
         Method method = methods.setter;
-        if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_SHORT))
+        if (method.getParameterTypes()[0].isEnum())
+            method.invoke(source, Enum.valueOf((Class) method.getParameterTypes()[0], parameter.toString()));
+        else if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_SHORT))
             method.invoke(source, ((Integer) parameter).shortValue());
         else if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_BYTE))
             method.invoke(source, ((Integer) parameter).byteValue());
@@ -296,7 +300,7 @@ public class Parser {
             ByteArrayInputStream bis = new ByteArrayInputStream(Base64.getDecoder().decode(parameter.toString().getBytes()));
             try (ObjectInput in = new ObjectInputStream(bis)) {
                 method.invoke(source, in.readObject());
-            }catch (Exception ignored){
+            } catch (Exception ignored) {
                 throw new RuntimeException("Cannot read object");
             }
         } else

@@ -15,16 +15,24 @@ public class ParserInitializr {
     private final String PARSER_INITIALIZR_TAG = "ParserInitializr: ";
     private static final Logger logger = LoggerFactory.getLogger(ParserInitializr.class);
 
+
+    public static Parser build(String basePackage) {
+        Parser parser = new Parser();
+        ParserInitializr initializr = new ParserInitializr(parser);
+        initializr.findAnnotatedClasses(basePackage);
+        return parser;
+    }
+
     private Parser parser;
 
     public ParserInitializr(Parser parser) {
         this.parser = parser;
     }
 
-    public void findAnnotatedClasses() {
+    public void findAnnotatedClasses(String basePackage) {
         logger.info("Finding JSON class candidates");
         ClassPathScanningCandidateComponentProvider provider = createComponentScanner();
-        for (BeanDefinition beanDef : provider.findCandidateComponents("ir.markazandroid.StocksSignal")) {
+        for (BeanDefinition beanDef : provider.findCandidateComponents(basePackage)) {
             addClass(beanDef);
         }
     }
