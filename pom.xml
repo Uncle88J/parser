@@ -7,10 +7,10 @@
     <groupId>ir.markazandroid.parsers</groupId>
     <artifactId>parser</artifactId>
     <packaging>pom</packaging>
-    <version>1.10.0</version>
+    <version>1.11.0</version>
 
     <properties>
-        <parser.version>1.10.0</parser.version>
+        <parser.version>1.11.0</parser.version>
         <!-- github server corresponds to entry in ~/.m2/settings.xml -->
         <github.global.server>github</github.global.server>
     </properties>

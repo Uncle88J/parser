@@ -32,6 +32,13 @@ public class JsonMessageConverter extends Parser implements HttpMessageConverter
 
     private ArrayList<MediaType> supportedMediaTypes;
 
+    public static JsonMessageConverter build(String basePackage) {
+        JsonMessageConverter parser = new JsonMessageConverter();
+        ParserInitializr initializr = new ParserInitializr(parser);
+        initializr.findAnnotatedClasses(basePackage);
+        return parser;
+    }
+
     public JsonMessageConverter() {
         supportedMediaTypes = new ArrayList<>();
         supportedMediaTypes.add(MediaType.APPLICATION_JSON);
@@ -41,31 +48,12 @@ public class JsonMessageConverter extends Parser implements HttpMessageConverter
 
     @Override
     public boolean canRead(Class clazz, MediaType mediaType) {
-        return (clazz.getSimpleName().equals("Collection")
-                || clazz.getSimpleName().equals("List")
-                || clazz.getSimpleName().equals("LinkedHashMap")
-                || clazz.getSimpleName().equals("HashMap")
-                || clazz.getSimpleName().equals("JSONObject")
-                || clazz.getSimpleName().equals("ArrayList")
-                || classes.containsKey(clazz.getName()))
-                && mediaType != null
-                && mediaType.includes(MediaType.APPLICATION_JSON_UTF8);
+        return classes.containsKey(clazz.getName());
     }
 
     @Override
     public boolean canWrite(Class clazz, MediaType mediaType) {
-        return mediaType == null
-                && clazz.getSimpleName().equals("LinkedHashMap")
-                || (clazz.getSimpleName().equals("Collection")
-                || clazz.getSimpleName().equals("List")
-                || clazz.getSimpleName().equals("HashMap")
-                || clazz.getSimpleName().equals("JSONObject")
-                || clazz.getSimpleName().equals("LinkedHashMap")
-                || clazz.getSimpleName().equals("ArrayList")
-                || clazz.equals(JsonProfile.class)
-                || classes.containsKey(clazz.getName()))
-                && mediaType != null
-                && mediaType.includes(MediaType.APPLICATION_JSON_UTF8);
+        return classes.containsKey(clazz.getName());
     }
 
     @Override
