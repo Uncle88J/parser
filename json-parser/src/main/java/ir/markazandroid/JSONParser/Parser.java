@@ -211,11 +211,15 @@ public class Parser {
             }
         } else if (valueType.equalsIgnoreCase(JSON.CLASS_TYPE_OBJECT)) {
             try {
+                Object o = method.invoke(source);
+                Class<?> c = methods.annotation.clazz();
+                if (Object.class.equals(c))
+                    c = o.getClass();
                 //profile
                 if (profile != null)
-                    return getJSON(methods.annotation.clazz(), method.invoke(source), profile);
+                    return getJSON(c, o, profile);
 
-                return getJSON(methods.annotation.clazz(), method.invoke(source), null);
+                return getJSON(c, o, null);
             } catch (NullPointerException e) {
                 return null;
             }
